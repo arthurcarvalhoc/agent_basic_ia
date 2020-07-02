@@ -38,11 +38,8 @@ class Vehicle():
         # A vector pointing from the location to the target
         desired = target.position - self.position
 
-        dist = sqrt(pow(desired[0], 2) + pow(desired[1], 2) )
-        if dist < 5:
-            self.is_collected = True
-            self.count = self.count + 1
-
+        # Verifiy if the food was found
+        self.is_found(desired)
 
         # Scale to maximum speed
         desired.setMag(self.maxspeed)
@@ -51,6 +48,12 @@ class Vehicle():
         steer.limit(self.maxforce)  # Limit to maximum steering force
 
         self.applyForce(steer)
+
+    def is_found(self, desired):
+        dist = sqrt(pow(desired[0], 2) + pow(desired[1], 2))
+        if dist < 5:
+            self.is_collected = True
+            self.count = self.count + 1
 
     def display(self):
         # Draw a triangle rotated in the direction of velocity
